@@ -16,7 +16,12 @@ After cloning the repo:
 uv run python hello.py
 ```
 
-This should run without extra packages.
+This should run without needing any extra packages. The first time you run a
+`uv` command in a project, you may see output about creating or updating the
+project environment.
+
+Next, look at `pyproject.toml`. Notice that this project already lists
+`pandas` as a dependency.
 
 Then try:
 
@@ -24,19 +29,7 @@ Then try:
 uv run python orders_summary.py
 ```
 
-You will likely hit a `ModuleNotFoundError` for `pandas`. If you do not, your
-machine may already have enough package state available for this command to get
-farther than expected. That is part of the reason project environments matter:
-different machines can start from different states.
-
-Next, build the project environment from the project files:
-
-```bash
-uv sync
-uv run python orders_summary.py
-```
-
-Now the script should get past `pandas`, but hit a `ModuleNotFoundError` for
+The script should get past `pandas`, but hit a `ModuleNotFoundError` for
 `seaborn`.
 
 Look at `pyproject.toml`, then add the missing dependency:
@@ -45,7 +38,7 @@ Look at `pyproject.toml`, then add the missing dependency:
 uv add seaborn
 ```
 
-Look at `pyproject.toml` again, then rerun:
+Look at `pyproject.toml` and `uv.lock` again, then rerun:
 
 ```bash
 uv run python orders_summary.py
